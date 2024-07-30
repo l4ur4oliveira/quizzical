@@ -32,7 +32,7 @@ This project is part of the _Learn React_ course by Scrimba.
 
 ## Step by step
 
-- [ ] Code and style start screen
+- [x] Code and style start screen
 - [ ] Code and style questions screen
 - [ ] Handle routing between screens
 - [ ] Fetch API
