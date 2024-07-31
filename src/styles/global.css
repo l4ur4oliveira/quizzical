@@ -12,6 +12,7 @@ body {
   text-align: center;
   font-family: Inter, Arial, sans-serif;
   background-color: #131833;
+  color: #293264;
 }
 
 main {
@@ -21,20 +22,9 @@ main {
   justify-content: center;
 }
 
-h1 {
+h1,
+h2 {
   font-family: "Karla", sans-serif;
-  font-size: 2rem;
-}
-
-button {
-  background-color: #4D5B9E;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  filter: brightness(1.5);
-  transition: all 200ms ease-out;
 }
 
 .wrapper {
@@ -59,6 +49,15 @@ button:hover {
   margin-top: 1rem;
   padding: 1rem;
   font-size: 1rem;
+  text-decoration: none;
+  background-color: #4D5B9E;
+  color: white;
   border: none;
   border-radius: 1rem;
+  cursor: pointer;
+}
+
+.btn-start:hover {
+  filter: brightness(1.5);
+  transition: all 200ms ease-out;
 }

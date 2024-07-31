@@ -34,7 +34,7 @@ This project is part of the _Learn React_ course by Scrimba.
 
 - [x] Code and style start screen
 - [ ] Code and style questions screen
-- [ ] Handle routing between screens
+- [x] Handle routing between screens
 - [ ] Fetch API
 - [ ] Shuffle answers array
 - [ ] Checking correct answers and end the game
