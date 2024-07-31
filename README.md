@@ -33,7 +33,7 @@ This project is part of the _Learn React_ course by Scrimba.
 ## Step by step
 
 - [x] Code and style start screen
-- [ ] Code and style questions screen
+- [x] Code and style questions screen
 - [x] Handle routing between screens
 - [ ] Fetch API
 - [ ] Shuffle answers array
