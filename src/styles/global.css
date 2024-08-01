@@ -48,25 +48,35 @@ h2 {
   border-radius: 8px;
 }
 
+*[class*="btn-"] {
+  text-decoration: none;
+  background-color: #4D5B9E;
+  color: white;
+  border: none;
+  border-radius: .625rem;
+  cursor: pointer;
+}
+
+*[class*="btn-"]:hover {
+  filter: brightness(1.5);
+  transition: all 200ms ease-out;
+}
+
 .btn-start {
   width: 190px;
   margin-top: 1rem;
   padding: 1rem;
   font-size: 1rem;
-  text-decoration: none;
-  background-color: #4D5B9E;
-  color: white;
-  border: none;
-  border-radius: 1rem;
-  cursor: pointer;
 }
 
-.btn-start:hover {
-  filter: brightness(1.5);
-  transition: all 200ms ease-out;
+.quizz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
 }
 
-.question {
+.quizz>div {
   width: 480px;
   padding-bottom: 1rem;
   display: flex;
@@ -76,12 +86,19 @@ h2 {
   text-align: left;
 }
 
+.quizz .btn-check {
+  width: 120px;
+  margin-top: .75rem;
+  padding: .75rem;
+  font-size: .75rem;
+}
+
 .answers {
   display: flex;
   gap: 1rem;
 }
 
-.answers label {
+.answers-item label {
   display: block;
   padding: 4px 8px;
   font-size: .75rem;
@@ -90,29 +107,29 @@ h2 {
   cursor: pointer;
 }
 
-.answers label:hover {
+.answers-item label:hover {
   background-color: #D6DBF5;
 }
 
-.answers label.selected {
+.answers-item label.inactive {
+  opacity: 50%;
+}
+
+.answers-item input {
+  display: none;
+}
+
+.answers-item input:checked~label {
   background-color: #D6DBF5;
   border: 1px solid #D6DBF5;
 }
 
-.answers label.correct {
+.answers-item input:checked~label.correct {
   background-color: #94D7A2;
   border: 1px solid #94D7A2;
 }
 
-.answers label.wrong {
+.answers-item input:checked~label.wrong {
   background-color: #F8BCBC;
   border: 1px solid #F8BCBC;
-}
-
-.answers label.inactive {
-  opacity: 50%;
-}
-
-.answers input {
-  display: none;
 }
