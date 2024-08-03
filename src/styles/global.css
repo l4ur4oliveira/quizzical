@@ -133,3 +133,30 @@ h2 {
   background-color: #F8BCBC;
   border: 1px solid #F8BCBC;
 }
+
+.loading {
+  width: 10rem;
+  font-size: 2rem;
+  font-weight: bold;
+  opacity: 40%;
+  text-align: left;
+}
+
+.loading::after {
+  content: "";
+  animation: dots 1s linear infinite forwards;
+}
+
+@keyframes dots {
+  0% {
+    content: ".";
+  }
+
+  50% {
+    content: "..";
+  }
+
+  100% {
+    content: "...";
+  }
+}
