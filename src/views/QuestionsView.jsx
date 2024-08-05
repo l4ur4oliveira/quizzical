@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { nanoid } from "nanoid"
+import { decode } from "html-entities"
 
 import Question from "../components/Question"
 
@@ -14,7 +15,7 @@ export default function QuestionsView() {
       const newQuestions = data.results.map(result => {
         return {
           id: nanoid(),
-          question: result.question,
+          question: decode(result.question),
           answers: [result.correct_answer, ...result.incorrect_answers]
         }
       })
