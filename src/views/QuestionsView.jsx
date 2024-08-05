@@ -5,8 +5,6 @@ import Question from "../components/Question"
 
 export default function QuestionsView() {
   const [questions, setQuestions] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [questionElements, setQuestionElements] = useState([])
 
   useEffect(() => {
     async function startFetch() {
@@ -27,27 +25,24 @@ export default function QuestionsView() {
     startFetch()
   }, [])
 
-  useEffect(() => {
-    if (questions.length > 0) {
-      const elements = questions.map(question => (
-        <Question key={question.id} text={question.question} />
-      ))
+  function createQuestionComponents() {
+    const elements = questions.map(question => (
+      <Question key={question.id} text={question.question} />
+    ))
 
-      setQuestionElements(elements)
-      setIsLoading(false)
-    }
-  }, [questions])
+    return elements
+  }
 
   return (
     <div className="wrapper">
       <form className="quizz">
 
-        {isLoading
+        {questions.length === 0
           ?
           <p className="loading">Loading</p>
           :
           <>
-            {questionElements}
+            {createQuestionComponents()}
             <button className="btn-check">Check answers</button>
           </>
         }
