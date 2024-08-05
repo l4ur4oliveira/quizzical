@@ -9,37 +9,34 @@ export default function QuestionsView() {
   const [questionElements, setQuestionElements] = useState([])
 
   useEffect(() => {
-    if (questions.length === 0) {
-      fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-        .then(response => response.json())
-        .then(data => {
-          const newQuestions = data.results.map(result => {
-            return {
-              id: nanoid(),
-              question: result.question,
-              answers: [result.correct_answer, ...result.incorrect_answers]
-            }
-          })
+    async function startFetch() {
+      const response = await fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+      const data = await response.json()
 
-          setQuestions(newQuestions)
-        })
+      const newQuestions = data.results.map(result => {
+        return {
+          id: nanoid(),
+          question: result.question,
+          answers: [result.correct_answer, ...result.incorrect_answers]
+        }
+      })
+
+      setQuestions(newQuestions)
     }
+
+    startFetch()
   }, [])
 
   useEffect(() => {
     if (questions.length > 0) {
-      setIsLoading(!isLoading)
-      setQuestionElements(newQuestionElements())
+      const elements = questions.map(question => (
+        <Question key={question.id} text={question.question} />
+      ))
+
+      setQuestionElements(elements)
+      setIsLoading(false)
     }
   }, [questions])
-
-  function newQuestionElements() {
-    const elements = questions.map(question => (
-      <Question key={question.id} text={question.question} />
-    ))
-
-    return elements
-  }
 
   return (
     <div className="wrapper">
