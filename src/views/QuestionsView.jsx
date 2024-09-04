@@ -17,7 +17,7 @@ export default function QuestionsView() {
           id: nanoid(),
           question: decode(result.question),
           correct_answer: result.correct_answer,
-          answers: [result.correct_answer, ...result.incorrect_answers]
+          answers: shuffleOptions([result.correct_answer, ...result.incorrect_answers])
         }
       })
 
@@ -26,6 +26,16 @@ export default function QuestionsView() {
 
     startFetch()
   }, [])
+
+  function shuffleOptions(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+  }
 
   function createQuestionComponents() {
     const elements = questions.map(question => (
