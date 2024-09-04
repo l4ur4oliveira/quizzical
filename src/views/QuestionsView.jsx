@@ -16,6 +16,7 @@ export default function QuestionsView() {
         return {
           id: nanoid(),
           question: decode(result.question),
+          correct_answer: result.correct_answer,
           answers: [result.correct_answer, ...result.incorrect_answers]
         }
       })
@@ -28,7 +29,7 @@ export default function QuestionsView() {
 
   function createQuestionComponents() {
     const elements = questions.map(question => (
-      <Question key={question.id} text={question.question} />
+      <Question key={question.id} id={question.id} text={question.question} options={question.answers} />
     ))
 
     return elements
