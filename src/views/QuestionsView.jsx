@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react"
-import { nanoid } from "nanoid"
-import { decode } from "html-entities"
+import { useState, useEffect } from "react";
+import { nanoid } from "nanoid";
+import { decode } from "html-entities";
 
-import Question from "../components/Question"
+import Question from "../components/Question";
 
 export default function QuestionsView() {
-  const [questions, setQuestions] = useState([])
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     async function startFetch() {
-      const response = await fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-      const data = await response.json()
+      const response = await fetch("https://opentdb.com/api.php?amount=5&type=multiple");
+      const data = await response.json();
 
       const newQuestions = data.results.map(result => {
         return {
@@ -18,14 +18,14 @@ export default function QuestionsView() {
           question: decode(result.question),
           correct_answer: result.correct_answer,
           answers: shuffleOptions([result.correct_answer, ...result.incorrect_answers])
-        }
-      })
+        };
+      });
 
-      setQuestions(newQuestions)
+      setQuestions(newQuestions);
     }
 
-    startFetch()
-  }, [])
+    startFetch();
+  }, []);
 
   function shuffleOptions(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -40,9 +40,9 @@ export default function QuestionsView() {
   function createQuestionComponents() {
     const elements = questions.map(question => (
       <Question key={question.id} id={question.id} text={question.question} options={question.answers} />
-    ))
+    ));
 
-    return elements
+    return elements;
   }
 
   return (
@@ -61,5 +61,5 @@ export default function QuestionsView() {
 
       </form>
     </div>
-  )
+  );
 }

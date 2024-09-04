@@ -1,5 +1,5 @@
 import { decode } from "html-entities";
-import { nanoid } from "nanoid"
+import { nanoid } from "nanoid";
 
 export default function Question(props) {
 
@@ -13,10 +13,10 @@ export default function Question(props) {
           <input type="radio" name={id} id={optionId} value={decode(option)} />
           <label htmlFor={optionId}>{decode(option)}</label>
         </div>
-      )
-    })
+      );
+    });
 
-    return elements
+    return elements;
   }
 
   return (
@@ -26,5 +26,5 @@ export default function Question(props) {
         {createOptionComponents(props.id)}
       </div>
     </div>
-  )
+  );
 }

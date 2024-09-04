@@ -7,5 +7,5 @@ export default function StartView() {
       <p>Challenge your random knowledge!</p>
       <Link to={"questions"} className="btn-start">Start quiz</Link>
     </div>
-  )
+  );
 }
