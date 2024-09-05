@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
-import "./styles/global.css"
+import "./styles/global.css";
 
 export default function App() {
   return (
     <main>
       <Outlet />
     </main>
-  )
+  );
 }
