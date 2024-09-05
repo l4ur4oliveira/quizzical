@@ -124,7 +124,8 @@ h2 {
   border: 1px solid #D6DBF5;
 }
 
-.answers-item input:checked~label.correct {
+.answers-item input:checked~label.correct,
+.answers-item label.correct {
   background-color: #94D7A2;
   border: 1px solid #94D7A2;
 }

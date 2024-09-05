@@ -6,6 +6,7 @@ import Question from "../components/Question";
 
 export default function QuestionsView() {
   const [questions, setQuestions] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
 
   useEffect(() => {
     async function startFetch() {
@@ -39,10 +40,36 @@ export default function QuestionsView() {
 
   function createQuestionComponents() {
     const elements = questions.map(question => (
-      <Question key={question.id} id={question.id} text={question.question} options={question.answers} />
+      <Question key={question.id} id={question.id} text={question.question} options={question.answers} selectAnswer={(optionId) => selectAnswer(optionId, question.id)} />
     ));
 
     return elements;
+  }
+
+  function selectAnswer(optionId, questionId) {
+    setUserAnswers(prevAnswers => {
+      const hasQuestion = prevAnswers.some(answer => answer.questionId === questionId);
+
+      if (!hasQuestion) {
+        return [
+          ...prevAnswers,
+          { questionId, optionId }
+        ];
+      }
+
+      const newArray = prevAnswers.map(answer => {
+        if (answer.questionId !== questionId) {
+          return answer;
+        }
+
+        return {
+          ...answer,
+          optionId
+        };
+      });
+
+      return newArray;
+    });
   }
 
   return (

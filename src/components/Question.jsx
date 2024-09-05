@@ -10,7 +10,7 @@ export default function Question(props) {
 
       return (
         <div key={idx} className="answers-item">
-          <input type="radio" name={id} id={optionId} value={decode(option)} />
+          <input type="radio" name={id} id={optionId} value={decode(option)} onChange={() => props.selectAnswer(idx)} />
           <label htmlFor={optionId}>{decode(option)}</label>
         </div>
       );
