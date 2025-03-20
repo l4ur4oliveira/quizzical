@@ -7,6 +7,7 @@ import Question from "../components/Question";
 export default function QuestionsView() {
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
+  const [endGame, setEndGame] = useState(false);
 
   useEffect(() => {
     async function startFetch() {
@@ -40,7 +41,13 @@ export default function QuestionsView() {
 
   function createQuestionComponents() {
     const elements = questions.map(question => (
-      <Question key={question.id} id={question.id} text={question.question} options={question.answers} selectAnswer={(optionId) => selectAnswer(optionId, question.id)} />
+      <Question
+        key={question.id}
+        id={question.id}
+        text={question.question}
+        options={question.answers}
+        selectAnswer={(optionId) => selectAnswer(optionId, question.id)}
+        correct={question.correct ?? null} />
     ));
 
     return elements;
@@ -71,6 +78,30 @@ export default function QuestionsView() {
       return newArray;
     });
   }
+  function checkAnswers(ev) {
+    ev.preventDefault();
+
+    const newQuestions = questions.map((question) => {
+      const userAnswer = userAnswers.find(answer => answer.questionId === question.id);
+      const correctAnswer = question.correct_answer;
+
+      if (question.answers[userAnswer.optionId] === correctAnswer) {
+        return { ...question, correct: true };
+      } else {
+        return { ...question, correct: false };
+      }
+    });
+
+    setQuestions(newQuestions);
+    setEndGame(true);
+  }
+
+  function restartGame() {
+    const form = document.querySelector("form");
+    form.reset();
+
+    window.location.reload();
+  }
 
   return (
     <div className="wrapper">
@@ -82,7 +113,12 @@ export default function QuestionsView() {
           :
           <>
             {createQuestionComponents()}
-            <button className="btn-check">Check answers</button>
+            {endGame
+              ?
+              <button className="btn-check" onClick={restartGame}>Restart</button>
+              :
+              <button className="btn-check" onClick={checkAnswers}>Check answers</button>
+            }
           </>
         }
 
