@@ -76,7 +76,7 @@ h2 {
   gap: .75rem;
 }
 
-.quizz>div {
+.quizz>div:not(.end-game) {
   width: 480px;
   padding-bottom: 1rem;
   display: flex;
@@ -86,9 +86,21 @@ h2 {
   text-align: left;
 }
 
+.quizz>.end-game {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  margin-top: .75rem;
+}
+
+.quizz>.end-game p {
+  font-size: .9rem;
+  font-weight: bold;
+}
+
 .quizz .btn-check {
   width: 120px;
-  margin-top: .75rem;
   padding: .75rem;
   font-size: .75rem;
 }

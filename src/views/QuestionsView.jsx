@@ -8,6 +8,7 @@ export default function QuestionsView() {
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
   const [endGame, setEndGame] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
 
   useEffect(() => {
     async function startFetch() {
@@ -61,6 +62,7 @@ export default function QuestionsView() {
       const correctAnswer = question.correct_answer;
 
       if (userAnswer.option === correctAnswer) {
+        setCorrectAnswers((prevCount) => prevCount += 1);
         return { ...question, correct: true };
       } else {
         return { ...question, correct: false };
@@ -88,12 +90,17 @@ export default function QuestionsView() {
           :
           <>
             {createQuestionComponents()}
-            {endGame
-              ?
-              <button className="btn-check" onClick={restartGame}>Restart</button>
-              :
-              <button className="btn-check" onClick={checkAnswers}>Check answers</button>
-            }
+            <div className="end-game">
+              {endGame
+                ?
+                <>
+                  <p>You scored {correctAnswers}/5 correct answers</p>
+                  <button className="btn-check" onClick={restartGame}>Restart</button>
+                </>
+                :
+                <button className="btn-check" onClick={checkAnswers}>Check answers</button>
+              }
+            </div>
           </>
         }
 
