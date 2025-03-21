@@ -7,6 +7,8 @@ import Question from "../components/Question";
 export default function QuestionsView() {
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
+  const [endGame, setEndGame] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
 
   useEffect(() => {
     async function startFetch() {
@@ -18,7 +20,7 @@ export default function QuestionsView() {
           id: nanoid(),
           question: decode(result.question),
           correct_answer: result.correct_answer,
-          answers: shuffleOptions([result.correct_answer, ...result.incorrect_answers])
+          options: shuffleOptions([result.correct_answer, ...result.incorrect_answers])
         };
       });
 
@@ -40,36 +42,43 @@ export default function QuestionsView() {
 
   function createQuestionComponents() {
     const elements = questions.map(question => (
-      <Question key={question.id} id={question.id} text={question.question} options={question.answers} selectAnswer={(optionId) => selectAnswer(optionId, question.id)} />
+      <Question
+        key={question.id}
+        id={question.id}
+        text={question.question}
+        options={question.options}
+        setUserAnswers={setUserAnswers}
+        correct={question.correct ?? null}
+        endGame={endGame} />
     ));
 
     return elements;
   }
 
-  function selectAnswer(optionId, questionId) {
-    setUserAnswers(prevAnswers => {
-      const hasQuestion = prevAnswers.some(answer => answer.questionId === questionId);
+  function checkAnswers(ev) {
+    ev.preventDefault();
 
-      if (!hasQuestion) {
-        return [
-          ...prevAnswers,
-          { questionId, optionId }
-        ];
+    const checkedQuestions = questions.map((question) => {
+      const userAnswer = userAnswers.find(answer => answer.questionId === question.id);
+      const correctAnswer = question.correct_answer;
+
+      if (userAnswer.option === correctAnswer) {
+        setCorrectAnswers((prevCount) => prevCount += 1);
+        return { ...question, correct: true };
+      } else {
+        return { ...question, correct: false };
       }
-
-      const newArray = prevAnswers.map(answer => {
-        if (answer.questionId !== questionId) {
-          return answer;
-        }
-
-        return {
-          ...answer,
-          optionId
-        };
-      });
-
-      return newArray;
     });
+
+    setQuestions(checkedQuestions);
+    setEndGame(true);
+  }
+
+  function restartGame() {
+    const form = document.querySelector("form");
+    form.reset();
+
+    window.location.reload();
   }
 
   return (
@@ -82,7 +91,17 @@ export default function QuestionsView() {
           :
           <>
             {createQuestionComponents()}
-            <button className="btn-check">Check answers</button>
+            <div className="end-game">
+              {endGame
+                ?
+                <>
+                  <p>You scored {correctAnswers}/5 correct answers</p>
+                  <button className="btn-check" onClick={restartGame}>Restart</button>
+                </>
+                :
+                <button className="btn-check" onClick={checkAnswers}>Check answers</button>
+              }
+            </div>
           </>
         }
 

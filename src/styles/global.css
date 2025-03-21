@@ -76,7 +76,7 @@ h2 {
   gap: .75rem;
 }
 
-.quizz>div {
+.quizz>div:not(.end-game) {
   width: 480px;
   padding-bottom: 1rem;
   display: flex;
@@ -86,9 +86,21 @@ h2 {
   text-align: left;
 }
 
+.quizz>.end-game {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  margin-top: .75rem;
+}
+
+.quizz>.end-game p {
+  font-size: .9rem;
+  font-weight: bold;
+}
+
 .quizz .btn-check {
   width: 120px;
-  margin-top: .75rem;
   padding: .75rem;
   font-size: .75rem;
 }
@@ -111,12 +123,17 @@ h2 {
   background-color: #D6DBF5;
 }
 
-.answers-item label.inactive {
-  opacity: 50%;
-}
-
 .answers-item input {
   display: none;
+}
+
+.answers-item input:disabled~label {
+  opacity: 60%;
+  cursor: default;
+}
+
+.answers-item input:disabled~label:hover {
+  background-color: inherit;
 }
 
 .answers-item input:checked~label {
@@ -124,8 +141,7 @@ h2 {
   border: 1px solid #D6DBF5;
 }
 
-.answers-item input:checked~label.correct,
-.answers-item label.correct {
+.answers-item input:checked~label.correct {
   background-color: #94D7A2;
   border: 1px solid #94D7A2;
 }
