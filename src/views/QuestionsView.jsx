@@ -19,7 +19,7 @@ export default function QuestionsView() {
           id: nanoid(),
           question: decode(result.question),
           correct_answer: result.correct_answer,
-          answers: shuffleOptions([result.correct_answer, ...result.incorrect_answers])
+          options: shuffleOptions([result.correct_answer, ...result.incorrect_answers])
         };
       });
 
@@ -45,7 +45,7 @@ export default function QuestionsView() {
         key={question.id}
         id={question.id}
         text={question.question}
-        options={question.answers}
+        options={question.options}
         setUserAnswers={setUserAnswers}
         correct={question.correct ?? null} />
     ));
@@ -56,18 +56,18 @@ export default function QuestionsView() {
   function checkAnswers(ev) {
     ev.preventDefault();
 
-    const newQuestions = questions.map((question) => {
+    const checkedQuestions = questions.map((question) => {
       const userAnswer = userAnswers.find(answer => answer.questionId === question.id);
       const correctAnswer = question.correct_answer;
 
-      if (question.answers[userAnswer.optionId] === correctAnswer) {
+      if (userAnswer.option === correctAnswer) {
         return { ...question, correct: true };
       } else {
         return { ...question, correct: false };
       }
     });
 
-    setQuestions(newQuestions);
+    setQuestions(checkedQuestions);
     setEndGame(true);
   }
 

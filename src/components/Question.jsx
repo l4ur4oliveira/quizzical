@@ -3,29 +3,29 @@ import { nanoid } from "nanoid";
 
 export default function Question(props) {
 
-  function selectAnswer(optionId) {
+  function selectAnswer(option) {
     props.setUserAnswers(prevAnswers => {
       const hasQuestion = prevAnswers.some(answer => answer.questionId === props.id);
 
       if (!hasQuestion) {
         return [
           ...prevAnswers,
-          { questionId: props.id, optionId }
+          { questionId: props.id, option }
         ];
       }
 
-      const newArray = prevAnswers.map(answer => {
+      const newAnswers = prevAnswers.map(answer => {
         if (answer.questionId !== props.id) {
           return answer;
         }
 
         return {
           ...answer,
-          optionId
+          option
         };
       });
 
-      return newArray;
+      return newAnswers;
     });
   }
 
@@ -33,6 +33,7 @@ export default function Question(props) {
 
     const elements = props.options.map((option, idx) => {
       const optionId = nanoid();
+      const optionValue = decode(option);
 
       let answerChecked = "";
       if (props.correct !== null) {
@@ -41,9 +42,9 @@ export default function Question(props) {
 
       return (
         <div key={idx} className="answers-item">
-          <input type="radio" name={id} id={optionId} value={decode(option)} onChange={() => selectAnswer(idx)} />
+          <input type="radio" name={id} id={optionId} value={optionValue} onChange={() => selectAnswer(optionValue)} />
           <label htmlFor={optionId} className={answerChecked}>
-            {decode(option)}
+            {optionValue}
           </label>
         </div>
       );
