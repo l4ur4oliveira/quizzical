@@ -123,12 +123,17 @@ h2 {
   background-color: #D6DBF5;
 }
 
-.answers-item label.inactive {
-  opacity: 50%;
-}
-
 .answers-item input {
   display: none;
+}
+
+.answers-item input:disabled~label {
+  opacity: 60%;
+  cursor: default;
+}
+
+.answers-item input:disabled~label:hover {
+  background-color: inherit;
 }
 
 .answers-item input:checked~label {

@@ -48,7 +48,8 @@ export default function QuestionsView() {
         text={question.question}
         options={question.options}
         setUserAnswers={setUserAnswers}
-        correct={question.correct ?? null} />
+        correct={question.correct ?? null}
+        endGame={endGame} />
     ));
 
     return elements;

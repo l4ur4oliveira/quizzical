@@ -42,7 +42,14 @@ export default function Question(props) {
 
       return (
         <div key={idx} className="answers-item">
-          <input type="radio" name={id} id={optionId} value={optionValue} onChange={() => selectAnswer(optionValue)} />
+          <input
+            type="radio"
+            name={id}
+            id={optionId}
+            value={optionValue}
+            onChange={() => selectAnswer(optionValue)}
+            disabled={props.endGame}
+          />
           <label htmlFor={optionId} className={answerChecked}>
             {optionValue}
           </label>
